@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/_StoreLayout.cshtml";
+}
+<script type="text/javascript" src="../Vue/adapter.min.js"></script>
+<script type="text/javascript" src="../Vue/vue.min.js"></script>
+<script type="text/javascript" src="../Vue/vue.js"></script>
+<script type="text/javascript" src="../Vue/instascan.min.js"></script>
+
+
+<div class="mainContainer">
+    <div class="container">
+        <div id="checkOut">
+            <h3>結帳</h3>
+            <br>
+            @*<form style="margin:0 auto; text-align:center;">
+                <div class="form-group">
+                    <label for="videoSource">Select Camera</label>
+                    <select id="videoSource" class="btn btn-default">
+                        <option selected>Default Camera</option>
+                    </select>
+                    <a class="btn btn-info" onclick="go()">Go</a>
+                </div>
+            </form>*@
+            <br>
+            <div style="text-align:center;">
+                <video id="preview" style="background-color:white; width:50%;"></video>
+            </div>
+            <br>
+            <form style="margin:0 auto; text-align:center;">
+                <div id="QRCodeContent"></div>
+            </form>
+</div>
+    </div>
+</div>
+
+
+<script>
+    go();
+    function go() {
+        var app = new Vue({
+            el: '#preview',
+            data: {
+                scanner: null,
+                activeCameraId: null,
+                cameras: [],
+                scans: []
+            },
+            mounted: function () {
+                var self = this;
+                self.scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5 });
+                self.scanner.addListener('scan', function (content, image) {
+                      $.ajax({
+                        type: 'post',
+                        url: '@Url.Action("../Order/GetCustomerOrderInfo")',
+                        data: {
+                            OrderID: content
+                        },
+                        success: function (result) {
+                            console.log(result);
+                           //var table = "<table>" + "<tr><td>顧客姓名</td><td>" + result.CustomerName + "</td></tr>" +
+                           //     "<tr><td>顧客電話</td><td>" + result.CustomerPhone + "</td></tr>" +
+                           //     "<tr><td>訂單總金額</td><td>" + result.TotalAmount+"</td></tr>" +
+                           //     "<tr><td>訂單明細</td><td>" + result.OrderDetail+"</td></tr></table>"
+                           //$("#QRCodeContent").html(table);
+                            $("#QRCodeContent").html("顧客姓名：" + result.CustomerName + "<br>" +
+                                "顧客電話：" + result.CustomerPhone + "<br>" +
+                                "訂單總金額：" + result.TotalAmount + "<br>" +
+                                "訂單明細：" + result.OrderDetail);
+                        },
+                        error: function () {
+                            $("#QRCodeContent").html("無法辨識此QR Code!");
+                        }
+                    });
+
+                    self.scans.unshift({ date: +(Date.now()), content: content });
+                });
+                Instascan.Camera.getCameras().then(function (cameras) {
+                    self.cameras = cameras;
+                    if (cameras.length > 0) {
+                        self.activeCameraId = cameras[0].id;
+                        self.scanner.start(cameras[0]);
+                    } else {
+                        console.error('No cameras found.');
+                    }
+                }).catch(function (e) {
+                    console.error(e);
+                });
+            },
+            methods: {
+                formatName: function (name) {
+                    return name || '(unknown)';
+                },
+                selectCamera: function (camera) {
+                    this.activeCameraId = camera.id;
+                    this.scanner.start(camera);
+                }
+            }
+        });
+    }
+</script>

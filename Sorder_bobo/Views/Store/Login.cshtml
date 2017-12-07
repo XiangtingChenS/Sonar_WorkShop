@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="../css/bootstrap_v4/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <!--JS-->
+    <script src="../js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="../js/bootstrap_v4/tether.min.js" type="text/javascript"></script>
+    <script src="../js/bootstrap_v4/bootstrap.min.js" type="text/javascript"></script>
+
+
+    <style>
+        .transparentBtn {
+            background-color: transparent;
+            border: 0px;
+            outline: none !important;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="loginPage">
+        <form id="loginForm">
+            <header>歡迎使用Sorder</header>
+            <div class="form-group">
+                <label>
+                    Username
+                </label>
+                <input id="account_login" placeholder="sorder@sorder.com" style="width:95%;">
+            </div>
+            <div class="form-group">
+                <label>
+                    Password
+                </label>
+                <input id="password_login" type="password" style="width:95%;">
+            </div>
+            <footer>
+                <button type="button" class="btn btn-success" onclick="storeLogin()">登入</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#register" onclick="initialField()">
+                    註冊
+                </button>
+            </footer>
+        </form>
+
+        <!-- Modal -->
+        <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registerTitle">註冊帳號</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="">帳號：</label>
+                                <input id="account_register" placeholder="sample@sorder.com" />
+                            </div>
+                            <div class="form-group">
+                                <label for="">密碼：</label>
+                                <input id="password_register" type="password" />
+                            </div>
+                            <div class="form-group">
+                                <label for="">確認密碼：</label>
+                                <input id="passwordConfirm_register" type="password" />
+                            </div>
+                            <div class="form-group">
+                                <label for="">姓名：</label>
+                                <input id="name_register" type="text" placeholder="王大明" />
+                            </div>
+                            <div class="form-group">
+                                <label for="">電話號碼：</label>
+                                <input id="phone_register" type="text" placeholder="0912345678" pattern="[0-9]{10}" />
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"  onclick="storeRegister()">註冊</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script>
+    function initialField(){
+        //initial
+        $("#account_login").val("");
+        $("#password_login").val("");
+
+        $("#account_register").val("");
+        $("#password_register").val("");
+        $("#passwordConfirm_register").val("");
+        $("#name_register").val("");
+        $("#phone_register").val("");
+    }
+
+    function storeRegister() {
+  
+
+       var account = $("#account_register").val();
+       var password = $("#password_register").val();
+       var passwordConfirm = $("#passwordConfirm_register").val();
+       var name = $("#name_register").val();
+       var phone = $("#phone_register").val();
+
+       if (!account || !password || !passwordConfirm || !name || !phone) {
+           return alert("欄位皆不可為空白!")
+       } else if (password != passwordConfirm) {
+          return alert("密碼不一致，請確認密碼!")
+       }
+
+       $.ajax({
+           type: 'post',
+           url: '../Store/StoreRegister',
+           data: {
+               StoreAccount: account,
+               StorePassword: password,
+               StoreKeeper: name,
+               StorePhone: phone
+           },
+           success: function (storeID) {
+              $("#register").modal("toggle");
+              alert("註冊成功!");
+           },
+           error: function () { alert("帳號已重複!"); }
+       });
+    }
+
+    function storeLogin() {
+        var account = $("#account_login").val();
+        var password = $("#password_login").val();
+        if (!account) {
+            return alert("帳號欄位不可為空!")
+        }
+
+        if (!password) {
+            return alert("密碼欄位不可為空!")
+        }
+
+        $.ajax({
+            type: 'post',
+            url: '../Store/StoreLogin',
+            data: {
+                StoreAccount: account,
+                StorePassword: password
+            },
+            success: function (storeID) {
+                alert("登入成功")
+                setCookie("StoreID", storeID, 0.5);
+
+                //直接跳轉到 "我的資訊" 頁面
+                window.location.href = "../Store/MyInfo";
+            },
+            error: function (responseText) { alert("登入失敗") }
+        });
+        
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+</script>

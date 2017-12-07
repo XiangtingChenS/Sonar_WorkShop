@@ -1,0 +1,39 @@
+@each $style in $styles {
+    .pos-f-t-#{nth($style,1)}{
+        .navbar{
+            background-color: #{nth($style,4)};
+            .navbar-toggler{
+                border: 1px solid #{nth($style,6)};
+                padding:6px 12px;
+                i{
+                    color: white;
+                }
+                &:hover{
+                    background-color:  #{nth($style,6)};
+                }
+            }
+            #setTime{
+                color: white;
+                border: 1px solid #{nth($style,6)};
+                &:hover{
+                    background-color:  #{nth($style,6)};
+                }
+            }
+        }
+        .collapse,.collapsing{
+            background-color: #{nth($style,6)};
+            .p-4{
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
+                .navbar-nav{ 
+                    .nav-item{ 
+                        .nav-link{
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+}

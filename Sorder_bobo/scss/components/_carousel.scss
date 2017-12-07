@@ -1,0 +1,37 @@
+.carousel{
+    height: 100%;
+    .carousel-indicators{
+        bottom: -20px;
+        .active{
+            background-color: #1B7592;
+        }
+    }
+    .carousel-inner{
+        height: 99%;
+        .carousel-item{
+            height: 100%;
+            img{
+                opacity: 0;
+            }
+            .carousel-caption{
+                height: 100%;
+                color: black;
+                position: absolute;
+                right: 0%;
+                bottom: 0px;
+                top:0px;
+                left: 0%; 
+                z-index: 0; 
+                padding-top: 0px; 
+                padding-bottom: 0px;                 
+                text-align: center;               
+            }
+        }
+    }
+    .carousel-control-prev{
+        left: -80px;
+    }
+    .carousel-control-next{
+        right: -85px;
+    }
+}

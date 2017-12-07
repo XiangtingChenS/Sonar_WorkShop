@@ -1,0 +1,38 @@
+.table{
+    caption{
+        caption-side: top;
+        text-align: center;
+        color: black;
+    }
+    thead{
+        tr th{
+            text-align: center;
+            vertical-align: middle;
+        }        
+    }
+    tbody,tfoot{
+        tr td{
+            text-align: center;
+            vertical-align: middle;
+            select{
+                padding: 5px 15px;
+                border-radius: 5px;
+            }
+            input{
+                padding: 5px 15px;
+                border-radius: 5px;
+                border:1px solid rgba(0,0,0,.15);
+            }
+        }
+        
+    }
+    tfoot{
+        #ordersRemark{
+            td{
+                color: red;
+                font-weight: bold;
+                
+            }
+        }
+    }
+}

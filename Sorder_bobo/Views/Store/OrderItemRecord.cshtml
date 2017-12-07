@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "OrderItemRecord";
+    Layout = "~/Views/_StoreLayout.cshtml";
+}
+
+<style>
+    .hide-calendar .ui-datepicker-calendar {
+        display: none;
+    }
+
+    .hide-month .ui-datepicker-month {
+        display: none;
+    }
+</style>
+
+<div class="mainContainer">
+    <div class="container">
+        <div id="orderRecord">
+            <h3>各品項銷售分析</h3>
+            <br>
+            <div>
+                <a class="btn btn-primary" href="../Store/OrderHistory">返回歷史訂單</a>
+                <a class="btn btn-primary" href="../Store/OrderSalesRecord">業績報表</a>
+            </div>
+            <br>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#dayItem" role="tab">日單項銷售業績</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#monthItem" role="tab">月單項銷售業績</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#yearItem" role="tab">年單項銷售業績</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="dayItem" role="tabpanel">
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            選擇日期 : <input id="selectDay_OrderItemRecord" class="date-picker" data-calendar="true" onchange="getDataByDate()"/>
+                        </div>
+                        <div id="salesBestByDay_OrderItemRecord" class="col"></div>
+                        <div id="salesWorstByDay_OrderItemRecord" class="col"></div> 
+                    </div>
+                    <br>
+                    <table id="dailyTable_OrderItemRecord" class="table table-sm" ></table>
+                </div>
+                <div class="tab-pane" id="monthItem" role="tabpanel">
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            選擇月份 : <input id="selectMonth_OrderItemRecord" class="date-picker" data-calendar="false"/>
+                        </div>
+                        <div id="salesBestByMonth_OrderItemRecord" class="col"></div>
+                        <div id="salesWorstByMonth_OrderItemRecord" class="col"></div> 
+                    </div>
+                    <br>
+                    <table id="monthlyTable_OrderItemRecord" class="table table-sm"></table>
+
+                </div>
+                <div class="tab-pane" id="yearItem" role="tabpanel">
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            選擇年份 : <input id="selectYear_OrderItemRecord" class="date-picker" data-calendar="false"/>
+                        </div>
+                        <div id="salesBestByYear_OrderItemRecord" class="col"></div>
+                        <div id="salesWorstByYear_OrderItemRecord" class="col"></div> 
+                    </div>
+                    <br>
+                    <table id="yearlyTable_OrderItemRecord" class="table table-sm"></table>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>
+
+
+<script type='text/javascript'>
+    var cookie;
+    $(document).ready(function () {
+        cookie = checkAndGetCookie();
+
+        //$('#dailyTable_OrderItemRecord').DataTable({
+        //    lengthChange: false,
+        //    pageLength: 10
+        //});
+        //$('#monthlyTable_OrderItemRecord').DataTable({
+        //    lengthChange: false,
+        //    pageLength: 10
+        //});
+        //$('#yearlyTable_OrderItemRecord').DataTable({
+        //    lengthChange: false,
+        //    pageLength: 10
+        //});
+    });
+
+
+    $(function () {
+        $('#selectDay_OrderItemRecord').datepicker({
+            dateFormat: 'yy-mm-dd',
+            beforeShow: function (el, dp) {
+                hideDateElement(false, false);
+            }
+            //onClose: function (dateText, inst) {
+            //    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            //    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            //    var day = $("#ui-datepicker-div .ui-datepicker-day :selected").val();
+            //    $(this).datepicker('setDate', new Date(year, month, day, 1));
+            //}
+        });
+
+        $('#selectMonth_OrderItemRecord').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm',
+            beforeShow: function (el, dp) {
+                hideDateElement(true, false);
+            },
+            onClose: function (dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, month, 1));
+                getDataByMonth();
+            }
+        });
+
+        $('#selectYear_OrderItemRecord').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy',
+            beforeShow: function (el, dp) {
+                hideDateElement(true, true);
+            },
+            onClose: function (dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, month, 1));
+                getDataByYear();
+            }
+        });
+
+    });
+
+    function hideDateElement(boo1, boo2) {
+        $('#ui-datepicker-div').toggleClass('hide-calendar', boo1);
+        $('#ui-datepicker-div').toggleClass('hide-month', boo2);
+    }
+
+    function getDataByDate() {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("../Order/GetOrderItemRecordsByDay")',
+            data: {
+                StoreID: cookie,
+                day: $('#selectDay_OrderItemRecord').val()
+            },
+            success: function (result) {
+                genOrderItemRecordsDataTable('#dailyTable_OrderItemRecord', result, "#salesBestByDay_OrderItemRecord", "#salesWorstByDay_OrderItemRecord");
+            },
+            error: function () { alert("Error"); }
+         });
+    }
+
+    function getDataByMonth() {
+         $.ajax({
+            type: 'post',
+            url: '@Url.Action("../Order/GetOrderItemRecordsByMonth")',
+            data: {
+                StoreID: cookie,
+                month: $('#selectMonth_OrderItemRecord').val()
+            },
+            success: function (result) {
+                genOrderItemRecordsDataTable('#monthlyTable_OrderItemRecord', result, "#salesBestByMonth_OrderItemRecord", "#salesWorstByMonth_OrderItemRecord");
+            },
+            error: function () { alert("Error"); }
+         });
+    }
+
+    function getDataByYear() {
+         $.ajax({
+            type: 'post',
+            url: '@Url.Action("../Order/GetOrderItemRecordsByYear")',
+            data: {
+                StoreID: cookie,
+                year: $('#selectYear_OrderItemRecord').val()+"-"+"11" //TODO 暫時用這樣(後面要接月份 後端才會認為是日期)
+            },
+            success: function (result) {
+                genOrderItemRecordsDataTable('#yearlyTable_OrderItemRecord', result, "#salesBestByYear_OrderItemRecord", "#salesWorstByYear_OrderItemRecord");
+            },
+            error: function () { alert("Error"); }
+         });
+    }
+
+
+    function genOrderItemRecordsDataTable(tableID, dataSet, salesBestID, salesWorstID) {
+        var table = $(tableID).DataTable({
+            destroy: true,
+            data: dataSet,
+            columns: [
+                { title: "品項", data: "ProductName" },
+                { title: "數量", data: "Quantity" },
+                { title: "總金額", data: "TotalPrice", render: $.fn.dataTable.render.number(',', '.', 0, '$ ') }
+            ],
+            "order": [[1, "desc"]],
+            lengthChange: false,
+            pageLength: 10,
+            select: true
+        });
+
+      
+      judgeEmptyData(tableID, dataSet, salesBestID, salesWorstID);
+    }
+
+    function judgeEmptyData(tableID, dataSet, salesBestID, salesWorstID) {
+        //由小到大
+        var sortData = dataSet.sort(function (a, b) {
+            return a.Quantity > b.Quantity ? 1 : -1;
+        });
+       
+        if (sortData.length > 1) {
+             //TODO 有漏洞 萬一有兩個銷售量  一樣的，也要一併顯示(還未做)
+            $(salesBestID).text("銷售量最佳：" + sortData[sortData.length - 1].ProductName);
+            $(salesWorstID).text("銷售量最差：" + sortData[0].ProductName);
+        } else {
+            $(salesBestID).text("銷售量最佳：暫無");
+            $(salesWorstID).text("銷售量最差：暫無");
+        }
+    }
+
+</script>

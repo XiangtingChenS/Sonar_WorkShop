@@ -1,0 +1,966 @@
+﻿
+@{
+    ViewBag.Title = "MyInfo";
+    Layout = "~/Views/_StoreLayout.cshtml";
+}
+
+<div class="mainContainer">
+    <div class="container">
+        <div id="myInfo">
+            <h3>我的資訊</h3>
+            <br>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#editProfile" role="tab" onclick="loadStoreInfoPage()">基本資料</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#editBussinessTime" role="tab" onclick="loadBusinessTimesPage()">營業時間</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#editProductGroup" role="tab" onclick="loadProductGroupsPage()">營業類別</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#editRemark" role="tab" onclick="loadRemarkGroupsPage()">營業備註</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#editWaitTime" role="tab" onclick="loadWaitTimePage()">等待時間</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active " id="editProfile" role="tabpanel">
+                    <form>
+                        <div class="form-group">
+                            <label>帳號</label>
+                            <div class="input-group">
+                                <input id="storeInfo_storeAccount" type="email" class="form-control" value="" disabled>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#changePassword">變更密碼</button>
+                                </span>
+                            </div>
+                        </div>
+                             
+                        <div class="form-group">
+                            <label>店家圖片</label>
+                            <input id="storeInfo_storeImage" type="file" class="form-control" onchange="uploadStoreImage(this)">
+                        </div>
+                        <div class="form-group">
+                            <label>負責人</label>
+                            <input id="storeInfo_storeKeeper" type="text" class="form-control" value="">
+                        </div>
+                        <div class="form-group">
+                            <label>店家名稱</label>
+                            <input id="storeInfo_storeName" type="text" class="form-control" value="">
+                        </div>
+                        <div class="form-group">
+                            <label>店家電話</label>
+                            <input id="storeInfo_storePhone" type="text" class="form-control" value="" pattern="[0-9]{10}">
+                        </div>
+                        <div class="form-group">
+                            <label>店家地址</label>
+                            <input id="storeInfo_storeAddress" type="text" class="form-control" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>店家簡介</label>
+                            <textarea id="storeInfo_storeIntroduction" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" onclick="updateStoreInfo()">送出</button>
+                        </div>
+                    </form>
+                    <!-- pwd Modal -->
+                    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="changePasswordLabel">變更密碼</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="oldPasswordConfirm">目前密碼</label>
+                                            <input type="password" class="form-control" id="oldPasswordConfirm" placeholder="請輸入舊密碼">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="setNewPassword">新密碼</label>
+                                            <input type="password" class="form-control" id="setNewPassword" placeholder="請輸入新密碼">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" id="newPasswordConfirm" placeholder="請再輸入一次新密碼">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cleanPasswordModalRow()">Close</button>
+                                    <button type="button" class="btn btn-primary"  onclick="updatePassword()">儲存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="editBussinessTime" role="tabpanel">
+                    <form>
+                        <div class="form-group">
+                            <label for="businessTime">
+                                營業時間
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="addBusinessTimeRow()">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </label>
+                            <table id="businessTime_table" class="table table-primary table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>星期</th>
+                                        <th>開始時間</th>
+                                        <th>結束時間</th>
+                                        <th>刪除</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" onclick="updateBusinessTime()">送出</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="editProductGroup" role="tabpanel">
+                    <form>
+                        <div class="form-group">
+                            <label>
+                                營業類別
+                                <button class="btn btn-secondary btn-sm" type="button" data-toggle="modal" data-target="#productGroupModal" onclick="addProductGroupItem()"> 新增營業類別</button>
+                            </label>
+                            <table id="productGroup_table" class="table table-primary table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>類別名稱</th>
+                                        <th>開啟商品明細備註</th>
+                                        <th>修改</th>
+                                        <th>刪除</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </form>
+                    <!-- ProductGroup Modal -->
+                    <div class="modal fade" id="productGroupModal" tabindex="-1" role="dialog" aria-labelledby="productGroupModalTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="productGroupModalTitle"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form> 
+                                        <div class="form-group">
+                                            <label for="PGName">類別名稱</label>
+                                            <input type="text" id="PGName" placeholder="Ex：滷味、飲料…">
+                                        </div>
+                                        <div>開啟商品明細備註</div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="openProductDetailRemark_Yes" value="0">是
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="openProductDetailRemark_No" value="1">否
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                                    <button id="saveProductGroupModalBtn" type="button" class="btn btn-primary">儲存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="editRemark" role="tabpanel">
+                    <form>
+                        <div class="form-group">
+                            <label>
+                                備註設定
+                                <button class="btn btn-secondary btn-sm" type="button" data-toggle="modal" data-target="#addRemark" onclick="loadProductRemarkSelectOption()"> 新增備註</button>
+                            </label>
+                            <table id="remarkGroup_table" class="table table-primary table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>類別</th>
+                                        <th>備註名稱</th>
+                                        <th>備註細項</th>
+                                        <th>修改備註</th>
+                                        <th>刪除備註</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </form>
+                    <!-- addRemark Modal -->
+                    <div class="modal fade" id="addRemark" tabindex="-1" role="dialog" aria-labelledby="addRemarkLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addRemarkLabel">新增備註</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            類別名稱
+                                            <select id="remarkModal_Select" class="custom-select"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            備註名稱
+                                            <input id="remarkModal_name" type="text" class="form-control" placeholder="Ex：甜度、辣度…">
+                                        </div>
+                                        <div class="form-group">
+                                            備註細項
+                                            <input id="remarkModal_detail" type="text" class="form-control" placeholder="Ex：全糖/少糖/半糖/無糖、大辣/中辣/小辣…">
+                                        </div>
+                                    </form>
+                                    <div>※選項請用'/'分隔※</div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" onclick="addNewRemarkData()">儲存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- updateRemark Modal -->
+                    <div class="modal fade" id="updateRemark" tabindex="-1" role="dialog" aria-labelledby="updateRemarkLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateRemarkLabel">修改備註</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group" id="productGroup">
+                                            <label for="productGroup">產品類別</label>
+                                            <div class="input-group">
+                                                <input id="productGroup_remarkModal" type="text" class="form-control" value="飲料" disabled>
+                                                <span class="input-group-btn">
+                                                    <button  type="button" class="btn btn-sm btn-primary" onclick="addRemarkDetailRow()">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="remarkGroup">
+                                            <table id="remarkDetail_table" class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th> 備註名稱 </th>
+                                                        <th> 備註細項 </th>
+                                                        <th> 刪除備註 </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>糖度</td>
+                                                        <td>
+                                                            <input type="text" value="全糖">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-danger">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" onclick="updateAndAddRemarkDetail()">儲存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="editWaitTime" role="tabpanel">
+                    <form>
+                        <div class="form-group">
+                            <label> 等待時間設定 </label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="UnitDescribe">一次可處理幾個品項</span>
+                                <input type="number" class="form-control" id="Unit" aria-describedby="UnitDescribe">
+                                <span class="input-group-addon">個</span>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="OrderQuantityDescribe">一次可處理幾筆訂單</span>
+                                <input type="number" class="form-control" id="OrderQuantity" aria-describedby="OrderQuantityDescribe">
+                                <span class="input-group-addon">筆</span>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="IntervalTimeDescribe">每次要間隔多久時間</span>
+                                <input type="number" class="form-control" id="IntervalTime" aria-describedby="IntervalTimeDescribe">
+                                <span class="input-group-addon">分鐘</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" onclick="updateWaitTime()">送出</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    var cookie;
+    $(document).ready(function () {
+        cookie = checkAndGetCookie();
+        loadStoreInfoPage();
+    });
+   
+
+    function loadStoreInfoPage() {
+        $.ajax({
+            type: 'post',
+            url: '../Store/GetStoreInfo',
+            data: {
+                StoreID: cookie
+            },
+            success: function (response) {
+                if (response.StoreImage != null) {
+                    //initial
+                    $("#storeInfo_storeImage").val('');
+                    $("#storeInfo_storeImage").attr('value', '');
+                    $("#storeInfo_storeImage").closest("div").find("br").remove();
+                    $("#storeInfo_storeImage").closest("div").find("img").remove();
+
+                    var img = document.createElement("img");
+                    img.style.width = "100px";
+                    img.src = response.StoreImage;
+                    $("#storeInfo_storeImage").before('<br>');
+                    $("#storeInfo_storeImage").before(img);
+                }
+               
+                $("#storeInfo_storeAccount").val(response.StoreAccount);
+                $("#storeInfo_storeKeeper").val(response.StoreKeeper)
+                $("#storeInfo_storeName").val(response.StoreName)
+                $("#storeInfo_storePhone").val(response.StorePhone)
+                $("#storeInfo_storeAddress").val(response.Address)
+                $("#storeInfo_storeIntroduction").val(response.StoreInformation)
+            },
+            error: function () { alert("Error"); }
+        });
+
+    }
+
+    function loadProductGroupsPage() {
+        $.ajax({
+            type: 'post',
+            url: '../Product/GetProductGroups',
+            data: {
+                StoreID: cookie
+            },
+            success: function (response) {
+                //initial
+                $("#productGroup_table").find("tbody tr").remove();
+
+                for (var i = 0; i < response.length; i++) {
+                    addProductGroupRow(response[i].ProductGroupID, response[i].ProductGroupTypeName, response[i].ProductGroupRemarkStatus) 
+                }
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+    function loadRemarkGroupsPage() {
+        $.ajax({
+            type: 'post',
+            url: '../Product/GetRemarkGroupsAndRemarks',
+            data: {
+                StoreID: cookie
+            },
+            success: function (response) {
+                //initial
+                $("#remarkGroup_table").find("tbody tr").remove();
+
+                for (var i = 0; i < response.length; i++) {
+                    addRemarkRow(response[i].RemarkGroupID, response[i].ProductGroupTypeName, response[i].RemarkGroupTypeName, response[i].RemarkNames);
+                }
+            },
+            error: function () { alert("Error"); }
+        });
+
+    }
+
+    function loadBusinessTimesPage() {
+        $.ajax({
+            type: 'post',
+            url: '../Store/GetBusinessTimes',
+            data: {
+                StoreID: cookie
+            },
+            success: function (response) {
+                //initial
+                $("#businessTime_table").find("tbody tr").remove();
+                for (var i = 0; i < response.length; i++) {
+                    addBusinessTimeRow();
+
+                    var week = response[i].Week;
+                    var startTime = timefillZero(response[i].StartTime.Hours) + ":" + timefillZero(response[i].StartTime.Minutes);
+                    var endTime = timefillZero(response[i].EndTime.Hours) + ":" + timefillZero(response[i].EndTime.Minutes);
+
+                    $($(".businessTime_weekSelect")[i]).val(week);
+                    $($(".businessTime_startTime")[i]).val(startTime);
+                    $($(".businessTime_closedTime")[i]).val(endTime);
+                }
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+    function loadWaitTimePage() {
+        $.ajax({
+            type: 'post',
+            url: '../Store/GetWaitTime',
+            data: {
+                StoreID: cookie
+            },
+            success: function (response) {
+                $("#Unit").val(response.Unit);
+                $("#OrderQuantity").val(response.OrderQuantity);
+                $("#IntervalTime").val(response.IntervalTime);
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+    function loadRemarkDetail(_this) {
+        var remarkGroupID = $(_this).closest("tr").attr("id");
+        $("#productGroup_remarkModal").attr("remarkGroupID", remarkGroupID);
+        $.ajax({
+            type: 'post',
+            url: '../Product/GetRemarkDetailsByRemarkGroupID',
+            data: {
+                //這邊不需要StoreID，知道RemarkGroupID即可
+                RemarkGroupID: remarkGroupID
+            },
+            success: function (response) {
+                //initial
+                $("#remarkDetail_table").find("tbody tr").remove();
+
+                $("#productGroup_remarkModal").val(response.ProductGroupTypeName);
+                for (var i = 0; i < response.RemarkIDs_list.length; i++) {
+                    addRemarkDetailRow();
+
+                    //set value
+                    $($("#remarkDetail_table").find("tr")[i + 1]).attr("id", response.RemarkIDs_list[i])
+                    $($(".remarkDetail_input")[i]).val(response.RemarkNames_list[i]);
+                    if (i == 0) {
+                        $($("#remarkDetail_table").find("td")[0]).text(response.RemarkGroupTypeName);
+                    }
+                }
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+
+    function updatePassword() {
+        var oldPasswordConfirm = $("#oldPasswordConfirm").val();
+        var setNewPassword = $("#setNewPassword").val();
+        var newPasswordConfirm = $("#newPasswordConfirm").val();
+
+        if (setNewPassword != newPasswordConfirm) {
+            alert("新密碼不一致!");
+        } else {
+              $.ajax({
+                type: 'post',
+                url: '../Store/UpdateStorePassword',
+                data: {
+                    StoreID: cookie,
+                    StoreOldPassword: oldPasswordConfirm,
+                    StoreNewPassword: setNewPassword
+                },
+                success: function (result) {
+                    if (result == "True") {
+                        alert("修改成功!");
+                        $('#changePassword').modal('toggle');
+                        cleanPasswordModalRow();
+                    } else {
+                        alert("目前密碼 不正確!");
+                    }
+                },
+                error: function () { alert("Error"); }
+            });
+        }
+    }
+
+    function cleanPasswordModalRow() {
+        $("#oldPasswordConfirm").val("");
+        $("#setNewPassword").val("");
+        $("#newPasswordConfirm").val("");
+    }
+
+
+    function updateStoreInfo() {
+        var storeImage = $("#storeInfo_storeImage").attr("value");
+        var storeKeeper = $("#storeInfo_storeKeeper").val();
+        var storeName =  $("#storeInfo_storeName").val();
+        var storePhone =  $("#storeInfo_storePhone").val();
+        var storeAddress =  $("#storeInfo_storeAddress").val();
+        var storeIntroduction = $("#storeInfo_storeIntroduction").val();
+
+        $.ajax({
+            type: 'post',
+            url: '../Store/UpdateStoreInfo',
+            data: {
+                StoreID: cookie,
+                StoreImage: storeImage,
+                StoreKeeper: storeKeeper,
+                StoreName: storeName,
+                StorePhone: storePhone,
+                Address: storeAddress,
+                StoreInformation: storeIntroduction
+            },
+            success: function (result) {
+                alert("儲存成功!");
+            },
+            error: function () { alert("Error"); }
+        });
+      
+    }
+
+    function addRemarkDetailRow() {
+        $("#remarkDetail_table").append('<tr><td></td><td><input type="text" class="remarkDetail_input" value=""></td>'+
+           '<td> <button type="button" class="btn btn-sm btn-danger fa fa-trash" onclick="deleteRemarkDetailRow(this)"></button></td></tr>');
+    }
+
+
+    function updateAndAddRemarkDetail() {
+        var remarks = validRemarkDetailRow();
+
+        $.ajax({
+            type: 'post',
+            url: '../Product/AddAndUpdateRemarkDetailsByRemarkGroupID',
+            data: {
+                //這邊不需要StoreID，知道RemarkGroupID即可
+                RemarkGroupID: remarks.remarkGroupID,
+                RemarkIDs_list: remarks.IDs,
+                RemarkNames_list: remarks.Names
+            },
+            success: function (response) {
+                //去調整主畫面顯示的字
+                resetRemarkDetailRowText();
+                //關閉modal  
+                $("#updateRemark").modal("toggle")
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+    //TODO 覺得刪除有問題 之後有時間要改  有兩個地方有一點不合邏輯
+    function deleteRemarkDetailRow(_this) {
+        var remarkID = $(_this).closest("tr").attr("id");
+        //有帶remarkID的tr 就要發request去資料庫更改成不顯示狀態
+        //沒有帶remarkID的tr 就直接刪除tr
+
+        
+        //if ($(_this).closest("tr").index() == 0 && $("#remarkDetail_table").find("tr").length > 1) {
+        //    return alert("應至少留下一備註細項!");
+        //}
+
+         //TODO 之後畫面要改吧! 備註名稱只有一小格  不應在table內
+        if ($(_this).closest("tr").index() == 0) {
+            return alert("第一欄備註細項無法刪除!");
+        }
+
+        if (remarkID) {
+            $.ajax({
+                type: 'post',
+                url: '../Product/DelRemarkDetailByRemarkID',
+                data: {
+                    //這邊不需要StoreID，知道RemarkGroupID即可
+                    RemarkID: remarkID
+                },
+                success: function (response) {
+
+                    //刪除資料 要去更改頁面上 備註細項的欄位 怕使用者 刪除完沒按儲存
+                    //!!! 這裡做的機制有點怪!!!! 應該是要確定儲存 才刪除!!!
+                    //TODO 先做這樣 有時間在改
+                    deleteTableRow(_this);
+                 
+                    resetRemarkDetailRowText();
+                },
+                error: function () { alert("Error"); }
+            });
+        } else {
+            deleteTableRow(_this);
+        }
+    
+    }
+
+    function validRemarkDetailRow() {
+        var remarkGroupID = $("#productGroup_remarkModal").attr("remarkgroupid");;
+        var remarkIDs = [], remarkNames = [];
+        for (var i = 0; i < $(".remarkDetail_input").length; i++) {
+            var remarkID = $($(".remarkDetail_input")[i].closest("tr")).attr("id");
+            var remarkName = $($(".remarkDetail_input")[i]).val();
+
+            //只要有ID，或使用者有輸入，則可算有效欄位
+            if (remarkID || remarkName) {
+                if (!remarkID) {
+                    remarkID = "";
+                }
+                remarkIDs.push(remarkID);
+                remarkNames.push(remarkName);
+            }
+        }
+        return { "remarkGroupID": remarkGroupID, "IDs": remarkIDs, "Names": remarkNames};
+    }
+
+    function resetRemarkDetailRowText() {
+        var remarks = validRemarkDetailRow();
+        var remarkNames = "";
+        for (var i = 0; i < remarks.Names.length; i++) {
+            remarkNames += remarks.Names[i] + "/";
+        }
+        //將最後一個反斜線取代掉
+        var remarkNames = remarkNames.replace(/\/$/, '');
+
+        var remarkGroupID = $("#productGroup_remarkModal").attr("remarkGroupID");
+        $($("#" + remarkGroupID).find("td")[2]).text(remarkNames);
+    }
+
+    function uploadStoreImage(_this) {
+        var file = _this.files[0];
+        if (file) {
+            $(_this).closest("div").find("br").remove();
+            $(_this).closest("div").find("img").remove();
+            var FR = new FileReader();
+
+            FR.addEventListener("load", function (e) {
+                _this.setAttribute("value", e.target.result);
+                var img = document.createElement("img");
+                img.style.width = "100px";
+                img.src = e.target.result;
+                $(_this).before('<br>');
+                $(_this).before(img);
+            });
+
+            FR.readAsDataURL(file);
+        }
+    }
+    
+    function addBusinessTimeRow() {
+        $("#businessTime_table").append("<tr><td><select class='businessTime_weekSelect'>" +
+            "<option disabled selected value='-1'>請選擇</option >" +
+            "<option value='0'>星期日</option>" +
+            "<option value='1'>星期一</option>" +
+            "<option value='2'>星期二</option > " +
+            "<option value='3'>星期三</option > " +
+            "<option value='4'>星期四</option > " +
+            "<option value='5'>星期五</option > " +
+            "<option value='6'>星期六</option > " +
+            "</select></td>"+
+            "<td><input type='time' class='businessTime_startTime' value='00:00'></td>" +
+            "<td><input type='time' class='businessTime_closedTime' value='00:00'></td>"+
+            "<td><button class='btn btn-sm btn-danger fa fa-trash-o' type= 'button' onclick= 'deleteTableRow(this)'></button><td></tr>");
+    }
+
+    function addProductGroupRow(productGroupID, ProductGroupTypeName, ProductGroupRemarkStatus) {
+        $("#productGroup_table").append('<tr id=' + productGroupID + '><td>' + ProductGroupTypeName + '</td><td>' + ProductGroupRemarkStatusConvertToText(ProductGroupRemarkStatus) + '</td>' +
+            '<td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#productGroupModal" onclick="editProductGroupRow(this)">' +
+            '<i class="fa fa-pencil" aria-hidden="true"></i></button></td>' +
+            '<td><button type="button" class="btn btn-danger btn-sm" onclick="deleteProductGroupRow(this)">' +
+            '<i class="fa fa-trash-o" aria-hidden="true"></i></button></td></tr>');
+    }
+
+    function addRemarkRow(remarkGroupID, productGroupTypeName, remarkGroupTypeName, remarkNames) {
+        $("#remarkGroup_table").append('<tr id=' + remarkGroupID +'><td>' + productGroupTypeName + '</td><td>' + remarkGroupTypeName +
+            '</td><td>' + remarkNames + '</td><td>' +
+            '<button class="btn btn-sm btn-primary fa fa-pencil" type="button" data-toggle="modal" data-target="#updateRemark" onclick="loadRemarkDetail(this)">' +
+            '</button></td><td><button type="button" class="btn btn-sm btn-danger fa fa-trash-o" onclick="deleteRemarkGroupRow(this)"></button></td></tr >');
+    }
+
+
+    function updateBusinessTime() {
+      
+        var weeks = [], startTimes = [], closedTimes = [];
+        for (var i = 0; i < $(".businessTime_weekSelect").length; i++) {
+            if ($($(".businessTime_weekSelect  option:selected")[i]).val() == "-1") {
+                return alert("請選擇星期!");
+            }
+            weeks.push($($(".businessTime_weekSelect  option:selected")[i]).val());
+            startTimes.push($($(".businessTime_startTime")[i]).val());
+            closedTimes.push($($(".businessTime_closedTime")[i]).val());
+        }
+        $.ajax({
+            type: 'post',
+            url: '../Store/UpdateBusinessTime',
+            data: {
+                StoreID: cookie,
+                Weeks: weeks,
+                StartTimes: startTimes,
+                ClosedTimes: closedTimes
+            },
+            success: function (result) {
+                alert("儲存成功!");
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+    function deleteTableRow(_this) {
+        $(_this).closest("tr").remove();
+    }
+
+    function addProductGroupItem() {
+        $("#productGroupModalTitle").text("新增營業類別");
+        $("#PGName").val("");
+        $("#openProductDetailRemark_Yes").prop("checked", true)
+        $("#saveProductGroupModalBtn").off();
+
+        $("#saveProductGroupModalBtn").click(function () {
+            var getPGModalData = getProductGroupModalData();
+
+            if (getPGModalData.ProductGroupTypeName.trim() == "") {
+                return alert("欄位不可為空!");
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '../Product/AddProductGroupItem',
+                data: {
+                    StoreID: cookie,
+                    ProductGroupTypeName: getPGModalData.ProductGroupTypeName,
+                    ProductGroupRemarkStatus: getPGModalData.ProductGroupRemarkStatus
+                },
+                success: function (productGroupID) {
+                    $("#productGroupModal").modal('toggle');
+                    addProductGroupRow(productGroupID, getPGModalData.ProductGroupTypeName, getPGModalData.ProductGroupRemarkStatus);
+                },
+                error: function () { alert("Error"); }
+            });
+        });
+    }
+
+    function editProductGroupRow(_this) {
+        $("#productGroupModalTitle").text("修改營業類別");
+
+        var productGroupID = $(_this).closest("tr").attr("id");
+
+        //編輯時(modal開啟)，撈資料放在modal畫面上
+        $.ajax({
+            type: 'post',
+            url: '../Product/GetProductGroupByProductGroupID',
+            data: {
+                StoreID: cookie,
+                productGroupID: productGroupID
+            },
+            success: function (response) {
+                $("#PGName").val(response.ProductGroupTypeName);
+
+                if (response.ProductGroupRemarkStatus == 0) {
+                    $("#openProductDetailRemark_Yes").prop("checked", true);
+                } else {
+                    $("#openProductDetailRemark_No").prop("checked", true);
+                }
+            },
+            error: function () { alert("Error"); }
+        });
+
+        $("#saveProductGroupModalBtn").off();
+        //編輯儲存，將新的資料show在清單畫面上
+        $("#saveProductGroupModalBtn").click(function () {
+            var getPGModalData = getProductGroupModalData();
+
+            if (getPGModalData.ProductGroupTypeName.trim() == "") {
+                return alert("欄位不可為空!");
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '../Product/UpdateProductGroupByProductGroupID',
+                data: {
+                    StoreID: cookie,
+                    ProductGroupID: productGroupID,
+                    ProductGroupTypeName: getPGModalData.ProductGroupTypeName,
+                    ProductGroupRemarkStatus: getPGModalData.ProductGroupRemarkStatus
+                },
+                success: function (response) {
+                    $("#productGroupModal").modal("toggle");
+                    //把修改的資料送回去，並更改畫面上資料
+                    $($(_this).closest("tr").find("td")[0]).text(getPGModalData.ProductGroupTypeName);
+                    $($(_this).closest("tr").find("td")[1]).text(ProductGroupRemarkStatusConvertToText(getPGModalData.ProductGroupRemarkStatus));
+                },
+                error: function () { alert("Error"); }
+            });
+
+        });
+    }
+
+    function deleteProductGroupRow(_this) {
+        //發一個request 去後端修改ProductGroupDisplayStatus //0顯示 1不顯示(店家在畫面上刪除該備註)
+        if (confirm("確定要刪除嗎?\n營業備註將會一併刪除。")) {
+            var productGroupID = $(_this).closest("tr").attr("id");
+            $.ajax({
+                type: 'post',
+                url: '../Product/DelProductGroupByProductGroupID',
+                data: {
+                    StoreID: cookie,
+                    productGroupID: productGroupID
+                },
+                success: function (response) {
+                    deleteTableRow(_this);
+                },
+                error: function () { alert("Error"); }
+            });
+        }
+
+    }
+
+    function deleteRemarkGroupRow(_this) {
+        if (confirm("確定要刪除嗎?\n營業細項將會一併刪除。")) {
+            var remarkGroupID = $(_this).closest("tr").attr("id");
+            $.ajax({
+                type: 'post',
+                url: '../Product/DelRemarkGroupByRemarkGroupID',
+                data: {
+                    StoreID: cookie,
+                    remarkGroupID: remarkGroupID
+                },
+                success: function (response) {
+                    deleteTableRow(_this);
+                },
+                error: function () { alert("Error"); }
+            });
+        }
+    }
+
+    function loadProductRemarkSelectOption() {
+        //載入營業群組的選項
+        $.ajax({
+            type: 'post',
+            url: '../Product/GetProductGroups',
+            data: {
+                StoreID: cookie
+            },
+            success: function (response) {
+                //initial
+                $("#remarkModal_Select").children().remove();
+                $("#remarkModal_name").val("");
+                $("#remarkModal_detail").val("");
+
+                $("#remarkModal_Select").append('<option disabled selected value="-1">請選擇</option>');
+                for (var i = 0; i < response.length; i++) {
+                    $("#remarkModal_Select").append('<option value="' + response[i].ProductGroupID + '">' + response[i].ProductGroupTypeName +'</option>');
+                }
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+    function addNewRemarkData() {
+
+        var productGroupTypeName = $("#remarkModal_Select  option:selected").text();
+        var productGroupTypeID = $("#remarkModal_Select  option:selected").val()
+        var remarkGroupTypeName = $("#remarkModal_name").val();
+        var remarkNames = $("#remarkModal_detail").val();
+
+        console.log();
+        if (productGroupTypeID == "-1" || remarkGroupTypeName.trim() == "" || remarkNames.trim() == "")
+        {
+            return alert("欄位皆不可為空!");
+        }
+        $.ajax({
+            type: 'post',
+            url: '../Product/AddRemarkGroupAndRemark',
+            data: {
+                StoreID: cookie,
+                ProductGroupID: productGroupTypeID,
+                RemarkGroupTypeName: remarkGroupTypeName,
+                RemarkNames: remarkNames
+            },
+            success: function (remarkGroupID) {
+                $("#addRemark").modal("toggle");
+                addRemarkRow(remarkGroupID, productGroupTypeName, remarkGroupTypeName, remarkNames);
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+ 
+
+    function updateWaitTime() {
+        var Unit = $("#Unit").val();
+        var OrderQuantity = $("#OrderQuantity").val();
+        var IntervalTime = $("#IntervalTime").val();
+
+        if (Unit == "" || OrderQuantity == "" || IntervalTime == "") {
+            return alert("欄位不可為空!");
+        }
+      
+       $.ajax({
+            type: 'post',
+            url: '../Store/UpdateWaitTime',
+            data: {
+                StoreID: cookie,
+                Unit: Unit,
+                OrderQuantity: OrderQuantity,
+                IntervalTime: IntervalTime
+            },
+            success: function (result) {
+                alert("儲存成功!");
+            },
+            error: function () { alert("Error"); }
+        });
+    }
+
+
+    function getProductGroupModalData() {
+        var ProductGroupTypeName = $("#PGName").val();
+        var ProductGroupRemarkStatus;  // 0訂單明細備註 1整筆訂單備註
+        if ($("#openProductDetailRemark_Yes").prop("checked")) {
+            ProductGroupRemarkStatus = 0;
+        } else if ($("#openProductDetailRemark_No").prop("checked")) {
+            ProductGroupRemarkStatus = 1;
+        }
+
+        return { "ProductGroupTypeName": ProductGroupTypeName, "ProductGroupRemarkStatus": ProductGroupRemarkStatus};
+    }
+
+    function ProductGroupRemarkStatusConvertToText(status) {
+        if (status == 0) {
+            return "是";
+        }
+
+        if (status == 1) {
+            return "否";
+        }
+    }
+
+
+
+
+</script>

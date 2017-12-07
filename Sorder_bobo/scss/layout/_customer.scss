@@ -1,0 +1,129 @@
+html body.customer{
+    width: 100%;
+    height: 100%;
+    font-family: "微軟正黑體";
+    background-color: #D3ECF1;
+    border: 0px;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+    .pos-f-t-primary{
+        width: 100%;
+        .navbar{
+            width: 100%;
+            h3{
+                width: 100%;
+                text-align: left;
+                color: white;
+                text-align: center;
+            }    
+            form{
+                position: absolute;
+                z-index: 999;
+            }
+        }
+    }
+    .mainContainer{
+        width: 100%;
+        #productList{
+            .row{
+                width: 100%;
+                margin: 0 auto;
+                div{
+                    width: 100%;
+                    padding-left: 0px;
+                    padding-right: 0px;
+                    text-align: center;
+                }
+                div.col{
+                    width: 100%;
+                    text-align: center;
+                    padding-left: 0px;
+                    padding-right: 0px;
+                    margin-bottom:10px;
+                }
+            }
+        }
+        #productDetail{
+            .row{
+                margin-bottom: 10px;
+                .col{
+                    height: 100%;
+                    margin: 0 auto;
+                    text-align: center;
+                    img{
+                        width: 80%;
+                        margin: 0 auto;
+                    }
+                }
+            }
+        }
+        #orderCart{
+            .row{
+                width: 100%;
+                margin: 0 auto;
+                div.col-8,div.col-1,div.col-2{
+                    width: 100%;
+                    padding-left: 0px;
+                    padding-right: 0px;
+                    text-align: center;
+                }
+                div.col{
+                    text-align: center;
+                }
+            }
+        }
+        #customerOrderRecord{
+            .list-group{
+                .list-group-item{                    
+                        .collapse,.collapsing{
+                            width: 100%;
+                            .table{
+                                width: 100%;
+                                margin-bottom: 0;
+                            }
+                        }
+                    
+                }
+            }
+        }
+        #storeList{
+            .card{
+                margin-bottom: 10px;
+            }
+        }
+        #storeDetail{
+            .row{
+                margin-bottom: 0;
+                width: 100%;
+                .col{
+                    height: 100%;
+                    width: auto;
+                    margin: 0 auto;
+                    text-align: center;
+                    padding-left: 0px;
+                    padding-right: 0px;
+                    img{
+                        width: 80%;
+                        margin: 0 auto;
+                    }
+                    a{
+                        margin-bottom: 10px;
+                        margin-top: 10px;
+                    }
+                }
+                .col-12 + .col-sm-4{
+                    label{
+                        h5{
+                            font-weight:bold;
+                        }
+                    }
+                }
+                .col-12 + .col-sm-8{
+                    color: #0D2149;
+                }
+            }
+        }
+    }
+    
+}

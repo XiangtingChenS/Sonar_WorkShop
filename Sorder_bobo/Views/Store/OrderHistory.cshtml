@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "OrderHistory";
+    Layout = "~/Views/_StoreLayout.cshtml";
+}
+
+<div class="mainContainer">
+    <div class="container">
+        <div id="orderRecord">
+            <h3>歷史訂單</h3>
+            <br>
+            <div>
+                <a class="btn btn-primary" href="../Store/OrderSalesRecord">業績報表</a>
+                <a class="btn btn-primary" href="../Store/OrderItemRecord">各品項銷售分析</a>
+
+            </div>
+            <br>
+            <table class="table table-striped" id="table-orderRecord"></table>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+          $.ajax({
+            type: 'post',
+            url: '@Url.Action("../Order/GetOrderHistory")',
+            data: {
+                StoreID: checkAndGetCookie()
+            },
+            success: function (result) {
+                genOrderHistiry(result);
+            },
+            error: function () { alert("Error"); }
+         });
+    });
+
+    function genOrderHistiry(dataSet) {
+        var table = $('#table-orderRecord').DataTable({
+            data: dataSet,
+            columns: [
+              //  { title: "訂單編號", "width": "15%", data: "OrderID" },
+                { title: "訂購時間", "width": "20%", data: "OrderDateTime" },
+                { title: "訂單內容",data: "OrderContent"},
+                { title: "總金額", "width": "10%", data: "TotalPrice", render: $.fn.dataTable.render.number(',', '.', 0, '$ ') }
+            ],
+            lengthChange: false,
+            pageLength: 10,
+            select: true
+        });
+
+    }
+
+
+</script>

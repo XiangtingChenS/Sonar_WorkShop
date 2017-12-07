@@ -1,0 +1,50 @@
+@charset "UTF-8";
+//公用變數
+@import "helpers/_variables.scss";
+//樣板
+@import "themes/_default.scss";
+//版面設計
+@import "layout/_customer.scss";
+@import "layout/_navbar.scss";
+@import "layout/_container.scss";
+@import "layout/_login.scss";
+//項目
+@import "components/_table.scss";
+@import "components/_page.scss";
+@import "components/_carousel.scss";
+@import "components/_modal.scss";
+@import "components/_card.scss";
+@import "components/_form.scss";
+
+html{
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    body{
+        width: 100%;
+        height: 100%;
+        font-family:$font-family;
+        background-color: $bgcolor;
+        border: 0px;
+        padding: 0;
+        margin: 0;
+        .pos-f-t{
+            width: 100%;
+            height: 10%;
+            margin: 0 auto;
+        }
+        .mainContainer{
+            width: 100%;
+            height: 90%;
+            margin: 0 auto;
+        }
+        h1,h2,h3,h4,h5,h6{
+            margin: 0 auto;
+            text-align: center;
+        }
+    }
+    
+}
+
