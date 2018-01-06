@@ -1,45 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "CheckOut";
-    Layout = "~/Views/_StoreLayout.cshtml";
-}
-<script type="text/javascript" src="../Vue/adapter.min.js"></script>
-<script type="text/javascript" src="../Vue/vue.min.js"></script>
-<script type="text/javascript" src="../Vue/vue.js"></script>
-<script type="text/javascript" src="../Vue/instascan.min.js"></script>
-
-<script src="../script/checkOut.js" type="text/javascript"></script>
-
-
-<div class="mainContainer">
-    <div class="container">
-        <div id="checkOut">
-            <h3>結帳</h3>
-            <br>
-            @*<form style="margin:0 auto; text-align:center;">
-                <div class="form-group">
-                    <label for="videoSource">Select Camera</label>
-                    <select id="videoSource" class="btn btn-default">
-                        <option selected>Default Camera</option>
-                    </select>
-                    <a class="btn btn-info" onclick="go()">Go</a>
-                </div>
-            </form>*@
-            <br>
-            <div style="text-align:center;">
-                <video id="preview" style="background-color:white; width:50%;"></video>
-            </div>
-            <br>
-            <form style="margin:0 auto; text-align:center;">
-                <div id="QRCodeContent"></div>
-            </form>
-</div>
-    </div>
-</div>
-
-
-<script>
-    @*go();
+  go();
     function go() {
         var app = new Vue({
             el: '#preview',
@@ -100,5 +59,4 @@
                 }
             }
         });
-    }*@
-</script>
+    }

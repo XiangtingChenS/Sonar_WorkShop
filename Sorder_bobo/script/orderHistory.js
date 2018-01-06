@@ -1,29 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "OrderHistory";
-    Layout = "~/Views/_StoreLayout.cshtml";
-}
-
-<script src="../script/orderHistory.js" type="text/javascript"></script>
-
-<div class="mainContainer">
-    <div class="container">
-        <div id="orderRecord">
-            <h3>歷史訂單</h3>
-            <br>
-            <div>
-                <a class="btn btn-primary" href="../Store/OrderSalesRecord">業績報表</a>
-                <a class="btn btn-primary" href="../Store/OrderItemRecord">各品項銷售分析</a>
-
-            </div>
-            <br>
-            <table class="table table-striped" id="table-orderRecord"></table>
-        </div>
-    </div>
-</div>
-<script>
-
-    @*$(document).ready(function () {
+    $(document).ready(function () {
           $.ajax({
             type: 'post',
             url: '@Url.Action("../Order/GetOrderHistory")',
@@ -51,7 +26,4 @@
             select: true
         });
 
-    }*@
-
-
-</script>
+    }

@@ -1,59 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "TodayOrder";
-    Layout = "~/Views/_StoreLayout.cshtml";
-}
-<style>
-    .newOrderLoad {
-        background-color: yellow !important;
-    }
-
-</style>
-
-<div class="mainContainer">
-    <div class="container">
-        <div id="todayOrder">
-            <div class="nfcBar row">
-                <div class="input-group margin-bottom-sm">
-                    <input id="serachOrderBar" class="form-control" type="text" placeholder="NFC Card" autofocus onkeypress="searchOrderAction(event)">
-                    <span class="input-group-addon">
-                        <i class="fa fa-search"></i>
-                    </span>
-                </div>
-            </div>
-            <!--新訂單 MAX 12-->
-            <div id="newOrders_div" class="newOrdersBlock row"></div>
-            <div class="ordersBlock row">
-                <!--製作中訂單-->
-                <div class="doingOrdersBlock col-md-9">
-                    <div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
-                        @*切換處理中訂單區塊頁面的小輪子*@
-                        <ol id="processingOrder_wheel" class="carousel-indicators"> </ol>
-                        @*處理中訂單的區塊*@
-                        <div id="processingOrder_container" class="carousel-inner"></div>
-
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                </div>
-                <!--查詢訂單-->
-                <div class="searchOrderBlock col-md-3">
-                    <h4>查詢專區</h4>
-                    <div id="searchOrder_container" class="searchOrder"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    @*//撈新訂單  之後要每秒發一次
+    //撈新訂單  之後要每秒發一次
     var lastestOrderTime;
     var cookie;
     $(document).ready(function () {
@@ -496,8 +441,4 @@
          existOrderInfo.appendChild(content);
 
          return existOrderInfo;
-     }*@
-
-
-
-</script>
+     }

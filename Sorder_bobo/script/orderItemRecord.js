@@ -1,90 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "OrderItemRecord";
-    Layout = "~/Views/_StoreLayout.cshtml";
-}
-
-<style>
-    .hide-calendar .ui-datepicker-calendar {
-        display: none;
-    }
-
-    .hide-month .ui-datepicker-month {
-        display: none;
-    }
-</style>
-
-<script src="../script/orderItemRecord.js" type="text/javascript"></script>
-
-<div class="mainContainer">
-    <div class="container">
-        <div id="orderRecord">
-            <h3>各品項銷售分析</h3>
-            <br>
-            <div>
-                <a class="btn btn-primary" href="../Store/OrderHistory">返回歷史訂單</a>
-                <a class="btn btn-primary" href="../Store/OrderSalesRecord">業績報表</a>
-            </div>
-            <br>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#dayItem" role="tab">日單項銷售業績</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#monthItem" role="tab">月單項銷售業績</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#yearItem" role="tab">年單項銷售業績</a>
-                </li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane active" id="dayItem" role="tabpanel">
-                    <br>
-                    <div class="row">
-                        <div class="col">
-                            選擇日期 : <input id="selectDay_OrderItemRecord" class="date-picker" data-calendar="true" onchange="getDataByDate()"/>
-                        </div>
-                        <div id="salesBestByDay_OrderItemRecord" class="col"></div>
-                        <div id="salesWorstByDay_OrderItemRecord" class="col"></div> 
-                    </div>
-                    <br>
-                    <table id="dailyTable_OrderItemRecord" class="table table-sm" ></table>
-                </div>
-                <div class="tab-pane" id="monthItem" role="tabpanel">
-                    <br>
-                    <div class="row">
-                        <div class="col">
-                            選擇月份 : <input id="selectMonth_OrderItemRecord" class="date-picker" data-calendar="false"/>
-                        </div>
-                        <div id="salesBestByMonth_OrderItemRecord" class="col"></div>
-                        <div id="salesWorstByMonth_OrderItemRecord" class="col"></div> 
-                    </div>
-                    <br>
-                    <table id="monthlyTable_OrderItemRecord" class="table table-sm"></table>
-
-                </div>
-                <div class="tab-pane" id="yearItem" role="tabpanel">
-                    <br>
-                    <div class="row">
-                        <div class="col">
-                            選擇年份 : <input id="selectYear_OrderItemRecord" class="date-picker" data-calendar="false"/>
-                        </div>
-                        <div id="salesBestByYear_OrderItemRecord" class="col"></div>
-                        <div id="salesWorstByYear_OrderItemRecord" class="col"></div> 
-                    </div>
-                    <br>
-                    <table id="yearlyTable_OrderItemRecord" class="table table-sm"></table>
-                </div>
-            </div>  
-        </div>
-    </div>
-</div>
-
-
-<script type='text/javascript'>
-    @*var cookie;
+    var cookie;
     $(document).ready(function () {
         cookie = checkAndGetCookie();
 
@@ -233,6 +147,4 @@
             $(salesBestID).text("銷售量最佳：暫無");
             $(salesWorstID).text("銷售量最差：暫無");
         }
-    }*@
-
-</script>
+    }
