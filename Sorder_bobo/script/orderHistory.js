@@ -8,7 +8,7 @@
             success: function (result) {
                 genOrderHistiry(result);
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
          });
     });
 

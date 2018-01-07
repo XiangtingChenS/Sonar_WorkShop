@@ -30,7 +30,7 @@
                 }
                 document.getElementById("productGroupSelect_modal").appendChild(PGSelect);
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
 
         //我的菜單 - 所有產品
@@ -43,7 +43,7 @@
             success: function (result) {
                 genMyMenuTable(result);
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     });
 
@@ -130,7 +130,7 @@
        //$('#table-menu tbody').on('click', 'button', function () {
        //    console.log(this);
        //    //var data = table.row($(this).parents('tr')).data();
-       //    //alert(data[0] + "'s salary is: " + data[5]);
+       //    //console.log(data[0] + "'s salary is: " + data[5]);
        //});
     }
 
@@ -160,7 +160,7 @@
                     $("#notifyCus_table").after("<span>沒有需要通知的顧客!</span>")
                 }
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -178,10 +178,10 @@
 
         var data = getProductModalData();
         if (data.productGroupID == "" || data.productName == "" || data.productPrice == "") {
-            return alert("必填欄位不可為空!");
+            return console.log("必填欄位不可為空!");
         }
         if (data.productGroupID == "" || data.productName == "" || data.productPrice == "") {
-            return alert("必填欄位不可為空!");
+            return console.log("必填欄位不可為空!");
         }
         $.ajax({
             type: 'post',
@@ -204,7 +204,7 @@
                 }).draw(false);
                 $("#addFood").modal("toggle");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
           });
 
         });
@@ -231,7 +231,7 @@
             var data = getProductModalData();
 
             if (data.productGroupID == "" || data.productName == "" || data.productPrice == "") {
-                return alert("必填欄位不可為空!");
+                return console.log("必填欄位不可為空!");
             }
 
            $.ajax({
@@ -261,7 +261,7 @@
                 }
                 $("#addFood").modal("toggle");
             },
-          error: function () { alert("Error"); }
+          error: function () { console.log("Error"); }
           });
        });
 
@@ -369,7 +369,7 @@
                 success: function (result) {
                     console.log("update ProductItem ok");
                 },
-                error: function () { alert("Error"); }
+                error: function () { console.log("Error"); }
             });
         }
 
@@ -390,7 +390,7 @@
                         console.log("Del ProductItem ok");
                         $(btn).closest("tr").remove();
                     },
-                    error: function () { alert("Error"); }
+                    error: function () { console.log("Error"); }
                 });
             } else {
                 $(btn).closest("tr").remove();

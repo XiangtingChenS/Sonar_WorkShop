@@ -34,7 +34,7 @@
                 $("#storeInfo_storeAddress").val(response.Address)
                 $("#storeInfo_storeIntroduction").val(response.StoreInformation)
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
 
     }
@@ -54,7 +54,7 @@
                     addProductGroupRow(response[i].ProductGroupID, response[i].ProductGroupTypeName, response[i].ProductGroupRemarkStatus) 
                 }
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -73,7 +73,7 @@
                     addRemarkRow(response[i].RemarkGroupID, response[i].ProductGroupTypeName, response[i].RemarkGroupTypeName, response[i].RemarkNames);
                 }
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
 
     }
@@ -100,7 +100,7 @@
                     $($(".businessTime_closedTime")[i]).val(endTime);
                 }
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -116,7 +116,7 @@
                 $("#OrderQuantity").val(response.OrderQuantity);
                 $("#IntervalTime").val(response.IntervalTime);
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -146,7 +146,7 @@
                     }
                 }
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -157,7 +157,7 @@
         var newPasswordConfirm = $("#newPasswordConfirm").val();
 
         if (setNewPassword != newPasswordConfirm) {
-            alert("新密碼不一致!");
+            console.log("新密碼不一致!");
         } else {
               $.ajax({
                 type: 'post',
@@ -169,14 +169,14 @@
                 },
                 success: function (result) {
                     if (result == "True") {
-                        alert("修改成功!");
+                        console.log("修改成功!");
                         $('#changePassword').modal('toggle');
                         cleanPasswordModalRow();
                     } else {
-                        alert("目前密碼 不正確!");
+                        console.log("目前密碼 不正確!");
                     }
                 },
-                error: function () { alert("Error"); }
+                error: function () { console.log("Error"); }
             });
         }
     }
@@ -209,9 +209,9 @@
                 StoreInformation: storeIntroduction
             },
             success: function (result) {
-                alert("儲存成功!");
+                console.log("儲存成功!");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
       
     }
@@ -240,7 +240,7 @@
                 //關閉modal  
                 $("#updateRemark").modal("toggle")
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -252,12 +252,12 @@
 
         
         //if ($(_this).closest("tr").index() == 0 && $("#remarkDetail_table").find("tr").length > 1) {
-        //    return alert("應至少留下一備註細項!");
+        //    return console.log("應至少留下一備註細項!");
         //}
 
          //TODO 之後畫面要改吧! 備註名稱只有一小格  不應在table內
         if ($(_this).closest("tr").index() == 0) {
-            return alert("第一欄備註細項無法刪除!");
+            return console.log("第一欄備註細項無法刪除!");
         }
 
         if (remarkID) {
@@ -277,7 +277,7 @@
                  
                     resetRemarkDetailRowText();
                 },
-                error: function () { alert("Error"); }
+                error: function () { console.log("Error"); }
             });
         } else {
             deleteTableRow(_this);
@@ -374,7 +374,7 @@
         var weeks = [], startTimes = [], closedTimes = [];
         for (var i = 0; i < $(".businessTime_weekSelect").length; i++) {
             if ($($(".businessTime_weekSelect  option:selected")[i]).val() == "-1") {
-                return alert("請選擇星期!");
+                return console.log("請選擇星期!");
             }
             weeks.push($($(".businessTime_weekSelect  option:selected")[i]).val());
             startTimes.push($($(".businessTime_startTime")[i]).val());
@@ -390,9 +390,9 @@
                 ClosedTimes: closedTimes
             },
             success: function (result) {
-                alert("儲存成功!");
+                console.log("儲存成功!");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -410,7 +410,7 @@
             var getPGModalData = getProductGroupModalData();
 
             if (getPGModalData.ProductGroupTypeName.trim() == "") {
-                return alert("欄位不可為空!");
+                return console.log("欄位不可為空!");
             }
 
             $.ajax({
@@ -425,7 +425,7 @@
                     $("#productGroupModal").modal('toggle');
                     addProductGroupRow(productGroupID, getPGModalData.ProductGroupTypeName, getPGModalData.ProductGroupRemarkStatus);
                 },
-                error: function () { alert("Error"); }
+                error: function () { console.log("Error"); }
             });
         });
     }
@@ -452,7 +452,7 @@
                     $("#openProductDetailRemark_No").prop("checked", true);
                 }
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
 
         $("#saveProductGroupModalBtn").off();
@@ -461,7 +461,7 @@
             var getPGModalData = getProductGroupModalData();
 
             if (getPGModalData.ProductGroupTypeName.trim() == "") {
-                return alert("欄位不可為空!");
+                return console.log("欄位不可為空!");
             }
 
             $.ajax({
@@ -479,7 +479,7 @@
                     $($(_this).closest("tr").find("td")[0]).text(getPGModalData.ProductGroupTypeName);
                     $($(_this).closest("tr").find("td")[1]).text(ProductGroupRemarkStatusConvertToText(getPGModalData.ProductGroupRemarkStatus));
                 },
-                error: function () { alert("Error"); }
+                error: function () { console.log("Error"); }
             });
 
         });
@@ -499,7 +499,7 @@
                 success: function (response) {
                     deleteTableRow(_this);
                 },
-                error: function () { alert("Error"); }
+                error: function () { console.log("Error"); }
             });
         }
 
@@ -518,7 +518,7 @@
                 success: function (response) {
                     deleteTableRow(_this);
                 },
-                error: function () { alert("Error"); }
+                error: function () { console.log("Error"); }
             });
         }
     }
@@ -542,7 +542,7 @@
                     $("#remarkModal_Select").append('<option value="' + response[i].ProductGroupID + '">' + response[i].ProductGroupTypeName +'</option>');
                 }
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -556,7 +556,7 @@
         console.log();
         if (productGroupTypeID == "-1" || remarkGroupTypeName.trim() == "" || remarkNames.trim() == "")
         {
-            return alert("欄位皆不可為空!");
+            return console.log("欄位皆不可為空!");
         }
         $.ajax({
             type: 'post',
@@ -571,7 +571,7 @@
                 $("#addRemark").modal("toggle");
                 addRemarkRow(remarkGroupID, productGroupTypeName, remarkGroupTypeName, remarkNames);
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 
@@ -583,7 +583,7 @@
         var IntervalTime = $("#IntervalTime").val();
 
         if (Unit == "" || OrderQuantity == "" || IntervalTime == "") {
-            return alert("欄位不可為空!");
+            return console.log("欄位不可為空!");
         }
       
        $.ajax({
@@ -596,9 +596,9 @@
                 IntervalTime: IntervalTime
             },
             success: function (result) {
-                alert("儲存成功!");
+                console.log("儲存成功!");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
         });
     }
 

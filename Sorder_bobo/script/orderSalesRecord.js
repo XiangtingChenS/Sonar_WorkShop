@@ -70,7 +70,7 @@
                 judgeEmptyData(result, "#lastQuarterSalesAmountByDay_OrderSalesRecord", "#currentQuarterSalesAmountByDay_OrderSalesRecord",
                     "昨日總銷售量", "今日總銷售量", "#growthByDay_OrderSalesRecord");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
          });
         }
         function getDataByMonth() {
@@ -86,7 +86,7 @@
                 judgeEmptyData(result, "#lastQuarterSalesAmountByMonth_OrderSalesRecord", "#currentQuarterSalesAmountByMonth_OrderSalesRecord",
                     "上月總銷售量", "本月總銷售量", "#growthByMonth_OrderSalesRecord");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
          });
     }
 
@@ -103,7 +103,7 @@
                     judgeEmptyData(result, "#lastQuarterSalesAmountByYear_OrderSalesRecord", "#currentQuarterSalesAmountByYear_OrderSalesRecord",
                         "去年總銷售量", "今年總銷售量", "#growthByYear_OrderSalesRecord");
                 },
-                error: function () { alert("Error"); }
+                error: function () { console.log("Error"); }
              });
         }
 

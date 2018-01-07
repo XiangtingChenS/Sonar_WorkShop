@@ -19,7 +19,7 @@
                 }
                 setInterval(getLatestOrders, 2000)
             },
-            error: function () { alert("Error_GetNewOrders"); }
+            error: function () { console.log("Error_GetNewOrders"); }
         });
 
      //撈狀態1的
@@ -50,7 +50,7 @@
             $("#processingOrder_wheel").find("li").first().addClass("active");
 
         },
-        error: function () { alert("Error_GetProcessingOrders"); }
+        error: function () { console.log("Error_GetProcessingOrders"); }
     });
     });
 
@@ -97,7 +97,7 @@
             },
             error: function () {
                 console.log("Error_GetNewOrdersByLastestOrderTime");
-               // alert("Error_GetNewOrdersByLastestOrderTime");
+               // console.log("Error_GetNewOrdersByLastestOrderTime");
             }
          });
     }
@@ -117,7 +117,7 @@
                     }
                 }
             },
-            error: function () { alert("Error_removeCanceledStatusOrdersDiv"); }
+            error: function () { console.log("Error_removeCanceledStatusOrdersDiv"); }
          });
 
     }
@@ -257,7 +257,7 @@
                  success: function (response) {
                      changePageForFinishBtn(_this);
                  },
-                 error: function () { alert("Error_orderFinishAction"); }
+                 error: function () { console.log("Error_orderFinishAction"); }
              });
          }
          $("#serachOrderBar").focus();
@@ -390,7 +390,7 @@
 
                     // changePageForFinishBtn(_this);
                  },
-                 error: function () { alert("目前無新訂單，無法綁定!"); }
+                 error: function () { console.log("目前無新訂單，無法綁定!"); }
              });
          }
      }
