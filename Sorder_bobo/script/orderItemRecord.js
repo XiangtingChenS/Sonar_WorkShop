@@ -79,7 +79,7 @@
             success: function (result) {
                 genOrderItemRecordsDataTable('#dailyTable_OrderItemRecord', result, "#salesBestByDay_OrderItemRecord", "#salesWorstByDay_OrderItemRecord");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
          });
     }
 
@@ -94,7 +94,7 @@
             success: function (result) {
                 genOrderItemRecordsDataTable('#monthlyTable_OrderItemRecord', result, "#salesBestByMonth_OrderItemRecord", "#salesWorstByMonth_OrderItemRecord");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
          });
     }
 
@@ -109,7 +109,7 @@
             success: function (result) {
                 genOrderItemRecordsDataTable('#yearlyTable_OrderItemRecord', result, "#salesBestByYear_OrderItemRecord", "#salesWorstByYear_OrderItemRecord");
             },
-            error: function () { alert("Error"); }
+            error: function () { console.log("Error"); }
          });
     }
 
