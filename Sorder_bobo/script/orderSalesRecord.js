@@ -1,4 +1,4 @@
-    var cookie;
+    /*var cookie;
     $(document).ready(function () {
         cookie = checkAndGetCookie();
     });
@@ -46,7 +46,7 @@
     function hideDateElement(boo1, boo2) {
         $('#ui-datepicker-div').toggleClass('hide-calendar', boo1);
         $('#ui-datepicker-div').toggleClass('hide-month', boo2);
-    }
+    }*/
 
     function getDataByDay() {
         $.ajax({
