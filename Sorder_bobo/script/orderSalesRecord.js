@@ -1,9 +1,6 @@
     var cookie;
     $(document).ready(function () {
         cookie = checkAndGetCookie();
-        //$('#dailyTable_OrderSalesRecord').DataTable();
-        //$('#monthlyTable_OrderSalesRecord').DataTable();
-        //$('#yearlyTable_OrderSalesRecord').DataTable();
     });
 
     $(function () {
@@ -12,12 +9,6 @@
             beforeShow: function (el, dp) {
                 hideDateElement(false, false);
             }
-            //onClose: function (dateText, inst) {
-            //    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            //    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            //    var day = $("#ui-datepicker-div .ui-datepicker-day :selected").val();
-            //    $(this).datepicker('setDate', new Date(year, month, day, 1));
-            //}
         });
 
         $('#selectMonth_OrderSalesRecord').datepicker({
