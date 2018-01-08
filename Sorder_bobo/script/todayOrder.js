@@ -34,9 +34,10 @@
             for (var i = 0; i < response.length; i++) {
 
                 //三的倍數 要做分割區塊
-                var partitionPage;
+                 var partitionPage = document.createElement("div");
+                 partitionPage.setAttribute("class", "row partitionPage");
                 if (i % 3 == 0) {
-                   partitionPage = genMainToggleActiveContainerAndLiTag();
+                   partitionPage = genMainToggleActiveContainerAndLiTag(partitionPage);
                 }
 
                 var existOrderInfo = genExistOrderInfoBlock(response[i], i);
@@ -347,9 +348,10 @@
                          $(".emptyOrderInfo").remove();
                          //取得現在 existOrderInfo 的total數量(不需要+1，因物件從0開始) 看是否需要建 partitionPage
                          var currentIndex = $(".existOrderInfo").length;
-                         var partitionPage;
+                         var partitionPage = document.createElement("div");
+						     partitionPage.setAttribute("class", "row partitionPage");
                          if (currentIndex % 3 == 0) {
-                             partitionPage = genMainToggleActiveContainerAndLiTag();
+                             partitionPage = genMainToggleActiveContainerAndLiTag(partitionPage);
                          }
 
                          var existOrderInfo = genExistOrderInfoBlock(response, currentIndex);
@@ -410,13 +412,12 @@
          }
      }
 
-     function genMainToggleActiveContainerAndLiTag() {
+     function genMainToggleActiveContainerAndLiTag(partitionPage) {
          var div1 = document.createElement("div");
          div1.setAttribute("class", "carousel-item mainToggleActiveContainer"); //active
          var div2 = document.createElement("div");
          div2.setAttribute("class", "carousel-caption d-block row");
-         partitionPage = document.createElement("div");
-         partitionPage.setAttribute("class", "row partitionPage");
+        
 
 
          div2.appendChild(partitionPage);
@@ -427,7 +428,6 @@
          var wheel_number = $("#processingOrder_wheel").find("li").length;
          $("#processingOrder_wheel").append(' <li data-target="#carouselExampleIndicators" data-slide-to="' + wheel_number + '"></li>');
 
-         return partitionPage;
      }
 
 
