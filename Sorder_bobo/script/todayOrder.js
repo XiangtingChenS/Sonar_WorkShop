@@ -190,15 +190,21 @@
          return content;
      }
 
-
-     function genRemarkDetailTable(data) {
-         var table = document.createElement("table");
+	 function genTable(){
+		  var table = document.createElement("table");
          table.setAttribute("class", "table table-sm table-bordered");
 
          var caption = document.createElement("caption");
          caption.style.textAlign = "left";
          var textForCaption = document.createTextNode(data.ProductGroupTypeName);
          caption.appendChild(textForCaption);
+		 
+		 return table;
+	 }
+	 
+
+     function genRemarkDetailTable(data) {
+         var table = genTable();
 
          table.appendChild(caption);
          $(table).append('<thead><tr><th>品項</th><th>數量</th><th>備註</th></tr></thead>');
@@ -219,13 +225,14 @@
      }
 
      function genRemarkGroupTable(data) {
-         var table = document.createElement("table");
+		  var table = genTable();
+        /* var table = document.createElement("table");
          table.setAttribute("class", "table table-sm table-bordered");
 
          var caption = document.createElement("caption");
          caption.style.textAlign = "left";
          var textForCaption = document.createTextNode(data.ProductGroupTypeName);
-         caption.appendChild(textForCaption);
+         caption.appendChild(textForCaption);*/
 
          table.appendChild(caption);
          $(table).append('<thead><tr><th>品項</th><th>數量</th></tr></thead>');
