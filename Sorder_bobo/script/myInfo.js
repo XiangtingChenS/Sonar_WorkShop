@@ -311,7 +311,7 @@
             remarkNames += remarks.Names[i] + "/";
         }
         //將最後一個反斜線取代掉
-        var remarkNames = remarkNames.replace(/\/$/, '');
+        remarkNames = remarkNames.replace(/\/$/, '');
 
         var remarkGroupID = $("#productGroup_remarkModal").attr("remarkGroupID");
         $($("#" + remarkGroupID).find("td")[2]).text(remarkNames);

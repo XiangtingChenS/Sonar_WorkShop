@@ -108,7 +108,7 @@
         }
 
         function genOrderItemRecordsDataTable(tableID, dataTitle, dataSet) {
-            var table = $(tableID).DataTable({
+             $(tableID).DataTable({
                 destroy: true,
                 data: dataSet.salesRecordTableData,
                 columns: [

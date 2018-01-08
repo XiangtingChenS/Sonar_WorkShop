@@ -290,15 +290,15 @@
          $("#processingOrder_container").find(".existOrderInfo")[orderIndex].remove();
 
          //把多餘的partitionPage & li 刪掉
-         for (var i = $(".partitionPage").length - 1; i >= 0; i--) {
-             if ($($(".partitionPage")[i]).children().length == 0) {
+         for (var j = $(".partitionPage").length - 1; j >= 0; j--) {
+             if ($($(".partitionPage")[j]).children().length == 0) {
 
-                 if ($($(".mainToggleActiveContainer")[i]).hasClass("active")) {
-                     $($(".mainToggleActiveContainer")[i - 1]).addClass("active");
-                     $($("#processingOrder_wheel").find("li")[i - 1]).addClass("active");
+                 if ($($(".mainToggleActiveContainer")[j]).hasClass("active")) {
+                     $($(".mainToggleActiveContainer")[j - 1]).addClass("active");
+                     $($("#processingOrder_wheel").find("li")[j - 1]).addClass("active");
                  }
-                 $(".mainToggleActiveContainer")[i].remove();
-                 $("#processingOrder_wheel").find("li")[i].remove();
+                 $(".mainToggleActiveContainer")[j].remove();
+                 $("#processingOrder_wheel").find("li")[j].remove();
              }
          }
 

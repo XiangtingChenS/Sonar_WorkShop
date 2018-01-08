@@ -13,7 +13,7 @@
     });
 
     function genOrderHistiry(dataSet) {
-        var table = $('#table-orderRecord').DataTable({
+        $('#table-orderRecord').DataTable({
             data: dataSet,
             columns: [
               //  { title: "訂單編號", "width": "15%", data: "OrderID" },

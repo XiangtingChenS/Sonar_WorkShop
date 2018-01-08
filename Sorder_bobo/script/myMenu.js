@@ -19,8 +19,6 @@
                 StoreID: cookie
             },
             success: function (response) {
-                console.log(response);
-                var option = document.createElement("option")
                 for (var i = 0; i < response.length; i++) {
                    var option = document.createElement("option")
                    option.setAttribute("value", response[i].ProductGroupID);
@@ -301,25 +299,6 @@
         table.row.add({ "ProductGroupID": "PG1","ProductGroupName":"滷味", "ProductImage": "", "ProductName": "米血", "ProductPrice": "10", "ProductStatus": "0", "a6": "" }).draw(false);
     }
 
-
-    //11111 TODO
-    function uploadProductImage(uploadFile) {
-            var file = uploadFile.files[0];
-
-            if (file) {
-                var FR = new FileReader();
-
-                FR.addEventListener("load", function (e) {
-                    uploadFile.setAttribute("value", e.target.result);
-
-                    var img = document.createElement("img");
-                    img.src = e.target.result;
-                    $(uploadFile).closest("td").prepend(img);
-                });
-
-                FR.readAsDataURL(file);
-            }
-        }
 
         function oversellBtnFunc(_this) {
             $(_this).closest("tr").find(".currentStatus").html("已售完");
