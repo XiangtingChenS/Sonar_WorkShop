@@ -1,21 +1,7 @@
     var cookie;
     $(document).ready(function () {
         cookie = checkAndGetCookie();
-
-        //$('#dailyTable_OrderItemRecord').DataTable({
-        //    lengthChange: false,
-        //    pageLength: 10
-        //});
-        //$('#monthlyTable_OrderItemRecord').DataTable({
-        //    lengthChange: false,
-        //    pageLength: 10
-        //});
-        //$('#yearlyTable_OrderItemRecord').DataTable({
-        //    lengthChange: false,
-        //    pageLength: 10
-        //});
     });
-
 
     $(function () {
         $('#selectDay_OrderItemRecord').datepicker({
@@ -23,12 +9,6 @@
             beforeShow: function (el, dp) {
                 hideDateElement(false, false);
             }
-            //onClose: function (dateText, inst) {
-            //    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            //    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            //    var day = $("#ui-datepicker-div .ui-datepicker-day :selected").val();
-            //    $(this).datepicker('setDate', new Date(year, month, day, 1));
-            //}
         });
 
         $('#selectMonth_OrderItemRecord').datepicker({
