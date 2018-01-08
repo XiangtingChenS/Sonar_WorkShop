@@ -34,7 +34,7 @@
                 $("#storeInfo_storeAddress").val(response.Address)
                 $("#storeInfo_storeIntroduction").val(response.StoreInformation)
             },
-            error: function () { console.log("Error"); }
+            error: function () {  }
         });
 
     }
@@ -54,7 +54,7 @@
                     addProductGroupRow(response[i].ProductGroupID, response[i].ProductGroupTypeName, response[i].ProductGroupRemarkStatus) 
                 }
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 
@@ -73,7 +73,7 @@
                     addRemarkRow(response[i].RemarkGroupID, response[i].ProductGroupTypeName, response[i].RemarkGroupTypeName, response[i].RemarkNames);
                 }
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
 
     }
@@ -100,7 +100,7 @@
                     $($(".businessTime_closedTime")[i]).val(endTime);
                 }
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 
@@ -116,7 +116,7 @@
                 $("#OrderQuantity").val(response.OrderQuantity);
                 $("#IntervalTime").val(response.IntervalTime);
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 
@@ -146,7 +146,7 @@
                     }
                 }
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 
@@ -176,7 +176,7 @@
                         console.log("目前密碼 不正確!");
                     }
                 },
-                error: function () { console.log("Error"); }
+                error: function () { }
             });
         }
     }
@@ -211,7 +211,7 @@
             success: function (result) {
                 console.log("儲存成功!");
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
       
     }
@@ -240,7 +240,7 @@
                 //關閉modal  
                 $("#updateRemark").modal("toggle")
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 
@@ -277,7 +277,7 @@
                  
                     resetRemarkDetailRowText();
                 },
-                error: function () { console.log("Error"); }
+                error: function () { }
             });
         } else {
             deleteTableRow(_this);
@@ -392,7 +392,7 @@
             success: function (result) {
                 console.log("儲存成功!");
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 
@@ -425,7 +425,7 @@
                     $("#productGroupModal").modal('toggle');
                     addProductGroupRow(productGroupID, getPGModalData.ProductGroupTypeName, getPGModalData.ProductGroupRemarkStatus);
                 },
-                error: function () { console.log("Error"); }
+                error: function () { }
             });
         });
     }
@@ -452,7 +452,7 @@
                     $("#openProductDetailRemark_No").prop("checked", true);
                 }
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
 
         $("#saveProductGroupModalBtn").off();
@@ -479,7 +479,7 @@
                     $($(_this).closest("tr").find("td")[0]).text(getPGModalData.ProductGroupTypeName);
                     $($(_this).closest("tr").find("td")[1]).text(ProductGroupRemarkStatusConvertToText(getPGModalData.ProductGroupRemarkStatus));
                 },
-                error: function () { console.log("Error"); }
+                error: function () { }
             });
 
         });
@@ -499,7 +499,7 @@
                 success: function (response) {
                     deleteTableRow(_this);
                 },
-                error: function () { console.log("Error"); }
+                error: function () { }
             });
         }
 
@@ -518,7 +518,7 @@
                 success: function (response) {
                     deleteTableRow(_this);
                 },
-                error: function () { console.log("Error"); }
+                error: function () { }
             });
         }
     }
@@ -542,7 +542,7 @@
                     $("#remarkModal_Select").append('<option value="' + response[i].ProductGroupID + '">' + response[i].ProductGroupTypeName +'</option>');
                 }
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 
@@ -553,7 +553,6 @@
         var remarkGroupTypeName = $("#remarkModal_name").val();
         var remarkNames = $("#remarkModal_detail").val();
 
-        console.log();
         if (productGroupTypeID == "-1" || remarkGroupTypeName.trim() == "" || remarkNames.trim() == "")
         {
             return console.log("欄位皆不可為空!");
@@ -571,7 +570,7 @@
                 $("#addRemark").modal("toggle");
                 addRemarkRow(remarkGroupID, productGroupTypeName, remarkGroupTypeName, remarkNames);
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 
@@ -598,7 +597,7 @@
             success: function (result) {
                 console.log("儲存成功!");
             },
-            error: function () { console.log("Error"); }
+            error: function () { }
         });
     }
 

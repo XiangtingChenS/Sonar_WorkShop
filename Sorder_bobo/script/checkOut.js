@@ -1,6 +1,6 @@
   go();
     function go() {
-        var app = new Vue({
+         new Vue({
             el: '#preview',
             data: {
                 scanner: null,
