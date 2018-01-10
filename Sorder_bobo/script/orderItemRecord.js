@@ -1,52 +1,8 @@
     var cookie;
     $(document).ready(function () {
         cookie = checkAndGetCookie();
+		dateCommon('#selectDay_OrderItemRecord', '#selectMonth_OrderItemRecord', '#selectYear_OrderItemRecord');
     });
-
-    $(function () {
-        $('#selectDay_OrderItemRecord').datepicker({
-            dateFormat: 'yy-mm-dd',
-            beforeShow: function (el, dp) {
-                hideDateElement(false, false);
-            }
-        });
-
-        $('#selectMonth_OrderItemRecord').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: 'yy-mm',
-            beforeShow: function (el, dp) {
-                hideDateElement(true, false);
-            },
-            onClose: function (dateText, inst) {
-                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                $(this).datepicker('setDate', new Date(year, month, 1));
-                getDataByMonth();
-            }
-        });
-
-        $('#selectYear_OrderItemRecord').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: 'yy',
-            beforeShow: function (el, dp) {
-                hideDateElement(true, true);
-            },
-            onClose: function (dateText, inst) {
-                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                $(this).datepicker('setDate', new Date(year, month, 1));
-                getDataByYear();
-            }
-        });
-
-    });
-
-    function hideDateElement(boo1, boo2) {
-        $('#ui-datepicker-div').toggleClass('hide-calendar', boo1);
-        $('#ui-datepicker-div').toggleClass('hide-month', boo2);
-    }
 
     function getDataByDate() {
         $.ajax({
